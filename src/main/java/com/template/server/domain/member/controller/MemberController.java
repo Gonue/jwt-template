@@ -5,10 +5,8 @@ import com.template.server.domain.member.dto.request.MemberJoinRequest;
 import com.template.server.domain.member.dto.response.MemberJoinResponse;
 import com.template.server.domain.member.service.MemberService;
 import com.template.server.global.error.response.Response;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,8 +21,9 @@ public class MemberController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Response<MemberJoinResponse> join(@Valid @RequestBody MemberJoinRequest request){
         MemberDto memberDto = memberService.join(request.getEmail(), request.getPassword(), request.getNickname());
-        return Response.success(MemberJoinResponse.from(memberDto));
+        return Response.success(201, MemberJoinResponse.from(memberDto));
     }
 }
