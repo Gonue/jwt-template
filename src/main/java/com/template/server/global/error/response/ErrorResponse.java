@@ -29,12 +29,17 @@ public class ErrorResponse {
     }
 
     public static ErrorResponse of(BindingResult bindingResult) {
-        return new ErrorResponse(FieldError.of(bindingResult), null);
+        ErrorResponse errorResponse = new ErrorResponse(FieldError.of(bindingResult), null);
+        errorResponse.status = HttpStatus.BAD_REQUEST.value();
+        return errorResponse;
     }
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
-        return new ErrorResponse(null, ConstraintViolationError.of(violations));
+        ErrorResponse errorResponse = new ErrorResponse(null, ConstraintViolationError.of(violations));
+        errorResponse.status = HttpStatus.BAD_REQUEST.value();
+        return errorResponse;
     }
+
 
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
