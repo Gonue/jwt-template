@@ -45,6 +45,8 @@ public class SecurityConfig {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeRequests(authorize -> authorize
+                        .antMatchers("/api/member/join", "/api/member/login").permitAll()
+                        .antMatchers("/api/member/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 );
         return http.build();
