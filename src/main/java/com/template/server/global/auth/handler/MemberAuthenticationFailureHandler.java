@@ -1,6 +1,8 @@
 package com.template.server.global.auth.handler;
 
+import com.template.server.global.error.util.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -15,6 +17,7 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
-        log.error("# Authentication failed: {}", exception.getMessage());
+        ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
+        log.error("Authentication failed: {}", exception.getMessage());
     }
 }
