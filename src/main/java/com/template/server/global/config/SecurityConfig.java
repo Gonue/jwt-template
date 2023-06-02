@@ -3,6 +3,7 @@ package com.template.server.global.config;
 import com.template.server.global.auth.filter.JwtAuthenticationFilter;
 import com.template.server.global.auth.filter.JwtVerificationFilter;
 import com.template.server.global.auth.handler.MemberAccessDeniedHandler;
+import com.template.server.global.auth.handler.MemberAuthenticationEntryPoint;
 import com.template.server.global.auth.handler.MemberAuthenticationFailureHandler;
 import com.template.server.global.auth.handler.MemberAuthenticationSuccessHandler;
 import com.template.server.global.auth.jwt.JwtTokenizer;
@@ -38,12 +39,14 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
-//                .authenticationEntryPoint()// 인증실패시 처리
-                .accessDeniedHandler(new MemberAccessDeniedHandler()) // 인증 실패시 처리
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeRequests(authorize -> authorize
+                        .antMatchers("/api/member/join", "/api/member/login").permitAll()
+                        .antMatchers("/api/member/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 );
         return http.build();

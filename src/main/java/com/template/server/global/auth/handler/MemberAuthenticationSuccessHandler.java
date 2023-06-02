@@ -1,5 +1,7 @@
 package com.template.server.global.auth.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.template.server.global.error.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -15,6 +17,8 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+        response.setContentType("application/json");
+        response.getWriter().write(new ObjectMapper().writeValueAsString(Response.success()));
         log.info("# Authenticated successfully!");
     }
 }
