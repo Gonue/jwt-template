@@ -4,9 +4,9 @@ spring:
       - security.yml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${LOCAL_DB_URL}
-    username: ${LOCAL_DB_USERNAME}
-    password: ${LOCAL_DB_PASSWORD}
+    url: ${SERVER_DB_URL}
+    username: ${SERVER_DB_USERNAME}
+    password: ${SERVER_DB_PASSWORD}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
