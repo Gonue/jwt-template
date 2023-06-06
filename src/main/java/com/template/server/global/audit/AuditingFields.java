@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public abstract class AuditingFields {
 
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "modified_at")
+    @Column(name = "modified_at", nullable = false)
     private LocalDateTime modifiedAt;
 }
